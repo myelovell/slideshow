@@ -20,9 +20,6 @@ Estimerad tid: 24h
 - [ ] Override alla val 
 - [ ] Välj mall
 
-# Roadmap
-- [x] Sätt upp projekt 1h
-
 ## URL Params
 | Parameter     | Description                               |
 | ------------- | ----------------------------------------- |
