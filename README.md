@@ -21,6 +21,8 @@ Estimerad tid: 28h
 - [ ] Override alla val - 2h
 - [ ] Välj mall - 1h
 
+Estimerad tid: 16h
+
 ## URL Params
 | Parameter     | Description                               |
 | ------------- | ----------------------------------------- |
