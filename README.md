@@ -2,6 +2,7 @@
 Work for NodearkAB. HTML package for slideshows
 
 # Roadmap frontend - My
+- [ ] Project Setup/ Research 4h
 - [ ] Få ner 1-50 `imgID_url`, `imgID_title`, `imgID_grid`, `mall`, `duration` 3h
 - [ ] Integrera mallar från CodePen 6h
 - [ ] Applicerar mall beroende på `mall` 2h
@@ -11,7 +12,7 @@ Work for NodearkAB. HTML package for slideshows
 - [ ] Croppar bilderna till fullskärm 2h
 - [ ] Responsivt ändrar bredd/höjd/proportion 5h
 
-Estimerad tid: 24h 
+Estimerad tid: 28h 
 
 # Roadmap backend - Nikki
 - [ ] Välj 1-50 bilder med drag and drop - 8h
