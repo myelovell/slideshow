@@ -23,10 +23,10 @@ Estimerad tid: 24h
 # Roadmap
 - [x] Sätt upp projekt 1h
 
-##URL Params
+## URL Params
 | Parameter     | Description                               |
 | ------------- | ----------------------------------------- |
-| `imgID_url`   | <img src="imgID_url" alt="imgID_title">   |
+| `imgID_url`   | `<img src="imgID_url" alt="imgID_title">` |
 | `imgID_title` | Displays during slideshow                 |
 | `imgID_grid`  | Between 0-8, determines placement of text |
 | `mall`        | Typ av mall vald                          |
