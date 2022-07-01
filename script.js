@@ -1,4 +1,4 @@
-//http://127.0.0.1:5500/index.html?duration=5&template=0
+//http://127.0.0.1:5500/?duration=2&template=0
 
 const gridSpots ={
     '0': 'top-left',
