@@ -60,45 +60,53 @@ async function generateSlideshow(data) {
             let img1 = document.querySelector(`.img${i}`)
             img1.style.display = ''
             img2.style.display = ''
+            let title2 = document.querySelector(`.title${0}`)
+            title2.style.display = 'none'
             playing.push(data[i])
             playing.push(data[0])
+            
         } else {
             let img2 = document.querySelector(`.img${i + 1}`)
             let img1 = document.querySelector(`.img${i}`)
             img2.style.display = ''
             img1.style.display = ''
+            img1.style.zIndex = 10;
+            img2.style.zIndex = 6;
+            let title2 = document.querySelector(`.title${i + 1}`)
+            title2.style.display = 'none'
             playing.push(data[i])
             playing.push(data[i + 1])
+            
         }
         let title1 = document.querySelector(`.title${i}`)
         title1.style.display = ''
-        title1.style.zIndex = 10;
+
+        title1.style.zIndex = 20;
+
         for (let j = 0; j < data.length; j++) {
-            if (i == data.length - 1) {
-                let restImg = document.querySelector(`.img0`)
-                let restTitle = document.querySelector(`.title${j}`)
-                restImg.style.display = ''
-                restTitle.style.display = ''
-                restTitle.style.zIndex = 10;
+            if (data[j] === data[i] || data[j] === data[i + 1]) {
+                console.log("matching")
+            }
+            else if (i == data.length - 1) {
                 if (j != 0) {
                     resting.push(data[j])
                     let restImg = document.querySelector(`.img${j}`)
                     let restTitle = document.querySelector(`.title${j}`)
                     restImg.style.display = 'none'
                     restTitle.style.display = 'none'
-                }
-
-            } else {
-                if (data[j] === data[i] || data[j] === data[i + 1]) {
                 } else {
-                    resting.push(data[j])
-                    let restImg = document.querySelector(`.img${j}`)
-                    let restTitle = document.querySelector(`.title${j}`)
-                    restImg.style.display = 'none'
-                    restTitle.style.display = 'none'
-                }
+                let restImg = document.querySelector(`.img0`)
+                let restTitle = document.querySelector(`.title${j}`)
+                restImg.style.display = ''
+                restTitle.style.display = 'none'
+                restTitle.style.zIndex = 20;}
+            } else {
+                resting.push(data[j])
+                let restImg = document.querySelector(`.img${j}`)
+                let restTitle = document.querySelector(`.title${j}`)
+                restImg.style.display = 'none'
+                restTitle.style.display = 'none'
             }
-
         }
         console.log("-------------")
         console.log("playing")
@@ -109,7 +117,21 @@ async function generateSlideshow(data) {
         resting = []
         playing = []      
     }
+    for (let x = 0; x < data.length; x++) {
+        let img1 = document.querySelector(`.img${x}`)
+        img1.style.display = ''
+
+        let title2 = document.querySelector(`.title${x}`)
+        title2.style.display = ''
+
+        
+    }
     generateSlideshow(data)
 }
 
+function handleTemplate() {
+    console.log(template)
+}
+
+handleTemplate()
 getAll()
