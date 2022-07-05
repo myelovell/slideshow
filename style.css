@@ -33,6 +33,8 @@ body {
 
 .img0 {
     /*
+    animation: name (duration)s linear both/reverse 0s, fade-out 2s ease-in forwards (duration - 2)s;
+    
     animation: kenburns-top 8s linear both reverse 0s, fade-out 2s ease-in forwards 6s;  
     animation: kenburns-right 8s linear both reverse 0s, fade-out 2s ease-in forwards 6s;
     animation: kenburns-bottom 8s linear both 0s, fade-out 2s ease-in forwards 6s;  
