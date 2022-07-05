@@ -2,15 +2,15 @@
 Work for NodearkAB. HTML package for slideshows
 
 # Roadmap frontend - My
-- [ ] Project Setup/ Research 4h
+- [x] Project Setup/ Research 4h
 - [ ] Få ner 1-50 `imgID_url`, `imgID_title`, `imgID_grid`, `mall`, `duration` 3h
 - [ ] Integrera mallar från CodePen 6h
 - [ ] Applicerar mall beroende på `mall` 2h
-- [ ] Applicerar uppspelningstid av bild beroende på `duration` 20min
-- [ ] Itterera genom bilder 1h
-- [ ] Applicerar plats av `imgID_title` beroende oå `imgID_grid` 4h
-- [ ] Croppar bilderna till fullskärm 2h
-- [ ] Responsivt ändrar bredd/höjd/proportion 5h
+- [x] Applicerar uppspelningstid av bild beroende på `duration` 20min
+- [x] Itterera genom bilder 1h
+- [x] Applicerar plats av `imgID_title` beroende oå `imgID_grid` 4h
+- [x] Croppar bilderna till fullskärm 2h
+- [x] Responsivt ändrar bredd/höjd/proportion 5h
 
 Estimerad tid: 28h 
 
