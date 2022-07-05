@@ -37,12 +37,12 @@ function generate(data) {
 
       var title = document.createElement("h1");
       title.innerHTML = data[i].title
-      title.classList = `title${i} title`
+      title.classList = `title${i} title slot${data[i].slot}`
       var titles = document.querySelector(".titles");
       titles.appendChild(title)
 
     }
-    manageDuration(data)
+    generateSlideshow(data)
 }
 
 function delay(n){
@@ -51,13 +51,10 @@ function delay(n){
     });
 }
 
-async function manageDuration(data) {
+async function generateSlideshow(data) {
     let playing = []
     let resting = []
-
     for (let i = 0; i < data.length; i++) {
-        console.log(data.length - 1)
-        console.log(i)
         if (i == data.length - 1) {
             let img2 = document.querySelector(`.img${0}`)
             let img1 = document.querySelector(`.img${i}`)
@@ -75,16 +72,15 @@ async function manageDuration(data) {
         }
         let title1 = document.querySelector(`.title${i}`)
         title1.style.display = ''
-
+        title1.style.zIndex = 10;
         for (let j = 0; j < data.length; j++) {
-            //console.log(j)
             if (i == data.length - 1) {
-                if (j == 0 || j == data.length - 1) {
-
-                }
-                else if (j != 0) {
-                    
-                    console.log(`pushing ${j}`)
+                let restImg = document.querySelector(`.img0`)
+                let restTitle = document.querySelector(`.title${j}`)
+                restImg.style.display = ''
+                restTitle.style.display = ''
+                restTitle.style.zIndex = 10;
+                if (j != 0) {
                     resting.push(data[j])
                     let restImg = document.querySelector(`.img${j}`)
                     let restTitle = document.querySelector(`.title${j}`)
@@ -92,12 +88,9 @@ async function manageDuration(data) {
                     restTitle.style.display = 'none'
                 }
 
-            } else if (i != data.length - 1){
-                
+            } else {
                 if (data[j] === data[i] || data[j] === data[i + 1]) {
-
                 } else {
-                    console.log(`pushing ${j}`)
                     resting.push(data[j])
                     let restImg = document.querySelector(`.img${j}`)
                     let restTitle = document.querySelector(`.title${j}`)
@@ -106,29 +99,7 @@ async function manageDuration(data) {
                 }
             }
 
-            
-
-            // if (data[j] === data[i] || data[j] === data[i + 1]) {
-            // } 
-            // else if (i == data.length - 1) {
-            //     console.log(`pushing ${j}`)
-            //     resting.push(data[j])
-            //     let restImg = document.querySelector(`.img${0}`)
-            //     let restTitle = document.querySelector(`.title${0}`)
-            //     restImg.style.display = 'none'
-            //     restTitle.style.display = 'none'
-            // } else {
-            //     console.log(`pushing ${j}`)
-            //     resting.push(data[j])
-            //     let restImg = document.querySelector(`.img${j}`)
-            //     let restTitle = document.querySelector(`.title${j}`)
-            //     restImg.style.display = 'none'
-            //     restTitle.style.display = 'none'
-            // }
-
-            
         }
-        
         console.log("-------------")
         console.log("playing")
         console.log(playing)
@@ -136,11 +107,9 @@ async function manageDuration(data) {
         console.log(resting)
         await delay(duration)
         resting = []
-        playing = []
-        
-        
+        playing = []      
     }
-    manageDuration(data)
+    generateSlideshow(data)
 }
 
 getAll()
