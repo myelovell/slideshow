@@ -68,6 +68,9 @@ async function generateSlideshow(data) {
         } else {
             let img2 = document.querySelector(`.img${i + 1}`)
             let img1 = document.querySelector(`.img${i}`)
+
+            img1.style.animation = "kenburns-top 8s linear both reverse 0s, fade-out 2s ease-in forwards 6s";
+            //img2.style.animation = "kenburns-bottom 6s linear both 0s, fade-out 2s ease-in forwards 12s";
             img2.style.display = ''
             img1.style.display = ''
             img1.style.zIndex = 10;
