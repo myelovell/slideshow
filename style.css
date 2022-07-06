@@ -3,6 +3,10 @@
     padding: 0;
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 }
+
+:root {
+  --duration: 5;
+}
 /* @media (orientation: landscape) {
     .img {
         width: 100vw;
@@ -54,7 +58,8 @@ body {
 }
 
 .textAnimation {
-  animation: focus-in-contract 3s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards 0s, text-blur-out 2s ease-in forwards 6s;
+  animation: focus-in-contract 2s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards 0s, text-blur-out 2s ease-in forwards 6s;
+
 }
 
 .titles {
@@ -77,7 +82,7 @@ body {
     text-shadow: #FFF 1px 0 10px;
     box-shadow: black;
     
-    z-index: 12;
+    z-index: 20;
 }
 
 
