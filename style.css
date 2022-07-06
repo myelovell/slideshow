@@ -28,31 +28,13 @@ body {
    display: flex;
    justify-content: center;
    align-items: center;
-   
 }
-
-.img0 {
     /*
     animation: name (duration)s linear both/reverse 0s, fade-out 2s ease-in forwards (duration - 2)s;
     
     animation: kenburns-top 8s linear both reverse 0s, fade-out 2s ease-in forwards 6s;  
     animation: kenburns-right 8s linear both reverse 0s, fade-out 2s ease-in forwards 6s;
-    animation: kenburns-bottom 8s linear both 0s, fade-out 2s ease-in forwards 6s;  
-    animation: kenburns-left 8s linear both 0s, fade-out 2s ease-in forwards 6s; */
-
-}   
-/*
-.img1{
-    animation: kenburns-top 16s linear both reverse 0s, fade-out 2s ease-in forwards 14s; 
-}
-
-.img2 {
-    animation: kenburns-right 24s linear both reverse 0s, fade-out 2s ease-in forwards 22s; 
-}
-
-.img3{
-    animation: kenburns-left 32s linear both 0s, fade-out 2s ease-in forwards 30s;
-} */
+    animation: kenburns-bottom 8s linear both 0s, fade-out 2s ease-in forwards 6s;  */
 
 
 
@@ -68,6 +50,11 @@ body {
     background-position: center center;
     background-repeat: no-repeat;
     background-size: cover;
+    opacity: 0;
+}
+
+.textAnimation {
+  animation: focus-in-contract 3s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards 0s, text-blur-out 2s ease-in forwards 6s;
 }
 
 .titles {
@@ -75,9 +62,9 @@ body {
     height: auto;
 }
 .title {
-    /*animation: focus-in-contract 3s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards 0s, text-blur-out 2s ease-in forwards (duration - 2)s; */
-    animation: focus-in-contract 3s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards 0s, text-blur-out 2s ease-in forwards 6s; 
-    display: block;
+    opacity: 0;
+    /*animation: focus-in-contract 3s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards 0s, text-blur-out 2s ease-in forwards (duration - 2)s; 
+    animation: focus-in-contract 3s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards 0s, text-blur-out 2s ease-in forwards 6s; */
     position: absolute;
     overflow: hidden;
     top: 50%;
@@ -90,7 +77,7 @@ body {
     text-shadow: #FFF 1px 0 10px;
     box-shadow: black;
     
-    z-index: 5;
+    z-index: 12;
 }
 
 

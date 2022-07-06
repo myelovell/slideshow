@@ -52,88 +52,68 @@ function delay(n){
 }
 
 async function generateSlideshow(data) {
-    let playing = []
-    let resting = []
-    for (let i = 0; i < data.length; i++) {
-        if (i == data.length - 1) {
-            let img2 = document.querySelector(`.img${0}`)
-            let img1 = document.querySelector(`.img${i}`)
-            img1.style.display = ''
-            img2.style.display = ''
-            let title2 = document.querySelector(`.title${0}`)
-            title2.style.display = 'none'
-            playing.push(data[i])
-            playing.push(data[0])
-            
-        } else {
-            let img2 = document.querySelector(`.img${i + 1}`)
-            let img1 = document.querySelector(`.img${i}`)
-
-            img1.style.animation = "kenburns-top 8s linear both reverse 0s, fade-out 2s ease-in forwards 6s";
-            //img2.style.animation = "kenburns-bottom 6s linear both 0s, fade-out 2s ease-in forwards 12s";
-            img2.style.display = ''
-            img1.style.display = ''
-            img1.style.zIndex = 10;
-            img2.style.zIndex = 6;
-            let title2 = document.querySelector(`.title${i + 1}`)
-            title2.style.display = 'none'
-            playing.push(data[i])
-            playing.push(data[i + 1])
-            
-        }
-        let title1 = document.querySelector(`.title${i}`)
-        title1.style.display = ''
-
-        title1.style.zIndex = 20;
-
-        for (let j = 0; j < data.length; j++) {
-            if (data[j] === data[i] || data[j] === data[i + 1]) {
-                console.log("matching")
-            }
-            else if (i == data.length - 1) {
-                if (j != 0) {
-                    resting.push(data[j])
-                    let restImg = document.querySelector(`.img${j}`)
-                    let restTitle = document.querySelector(`.title${j}`)
-                    restImg.style.display = 'none'
-                    restTitle.style.display = 'none'
-                } else {
-                let restImg = document.querySelector(`.img0`)
-                let restTitle = document.querySelector(`.title${j}`)
-                restImg.style.display = ''
-                restTitle.style.display = 'none'
-                restTitle.style.zIndex = 20;}
-            } else {
-                resting.push(data[j])
-                let restImg = document.querySelector(`.img${j}`)
-                let restTitle = document.querySelector(`.title${j}`)
-                restImg.style.display = 'none'
-                restTitle.style.display = 'none'
-            }
-        }
-        console.log("-------------")
-        console.log("playing")
-        console.log(playing)
-        console.log("resting")
-        console.log(resting)
-        await delay(duration)
-        resting = []
-        playing = []      
-    }
     for (let x = 0; x < data.length; x++) {
-        let img1 = document.querySelector(`.img${x}`)
-        img1.style.display = ''
+        let rest = document.querySelector(`.img${x}`)
+        rest.style.opacity = 0;
+        let r = document.querySelector(`.title${x}`)
+        r.style.opacity = 0;
+    }
+    let playing = [data[0]]
 
-        let title2 = document.querySelector(`.title${x}`)
-        title2.style.display = ''
+    for (let i = 0; i < data.length; i++) {
+        console.log(`${i} and ${i + 1}`)
+        if (i == 0) {
+            playing.push(data[i + 1])
+            let activeImg = document.querySelector(`.img0`)
+            activeImg.style.opacity = 100;
+            let activeTitle = document.querySelector(`.title0`)
+            activeTitle.style.opacity = 100;
+            handleTemplate("first index", i)
 
-        
+        } else if (i == data.length - 1) {
+            playing.shift()
+            playing.push(data[0])
+            let rest = document.querySelector(`.img${i}`)
+            rest.style.opacity = 100;
+            let activeTitle = document.querySelector(`.title${i}`)
+            activeTitle.style.opacity = 100;
+            handleTemplate("last index", i)
+
+        } else {
+            playing.shift()
+            playing.push(data[i + 1])
+            let activeImg = document.querySelector(`.img${i}`)
+            activeImg.style.opacity = 100;
+            let activeTitle = document.querySelector(`.title${i}`)
+            activeTitle.style.opacity = 100;
+            handleTemplate("index", i)
+        }
+       
+
+        console.log(playing)
+        await delay(duration)
+        let r = document.querySelector(`.title${i}`)
+        r.style.opacity = 0;
+
     }
     generateSlideshow(data)
 }
 
-function handleTemplate() {
-    console.log(template)
+function handleTemplate(x, i) {
+    console.log(`handeling template${template}`)
+    if (x == "first index") {
+        let activeTitle = document.querySelector(`.title0`)
+        activeTitle.classList.add(`textAnimation`)
+    } else if (x == "index") {
+        let activeTitle = document.querySelector(`.title${i}`)
+        activeTitle.classList.add(`textAnimation`)
+    } else if(x == "last index") {
+        let activeTitle = document.querySelector(`.title${i}`)
+        activeTitle.classList.add(`textAnimation`)
+    } else {
+        console.log("error")
+    }
+    
 }
 
 handleTemplate()
