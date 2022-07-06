@@ -15,11 +15,11 @@ Work for NodearkAB. HTML package for slideshows
 Estimerad tid: 28h 
 
 # Roadmap backend - Nikki
-- [ ] Välj 1-50 bilder med drag and drop - 8h
-- [ ] Välj titel för bild (valfri) - 1h
-- [ ] Välj vart texten hamnar enligt ett grid - 4h
-- [ ] Override alla val - 2h
-- [ ] Välj mall - 1h
+- [x] Välj 1-50 bilder med drag and drop - 8h
+- [x] Välj titel för bild (valfri) - 1h
+- [x] Välj vart texten hamnar enligt ett grid - 4h
+- [x] Override alla val - 2h
+- [x] Välj mall - 1h
 
 Estimerad tid: 16h
 
