@@ -20,13 +20,15 @@ const duration = params.get("duration")
 const template = params.get("template")
 
 const imageAnimation = [
-    `kenburns-top ${duration}s linear both reverse 0s, fade-out 5s ease-in forwards ${duration- 2}s`,
+    `kenburns-top ${duration}s linear both reverse 0s, fade-out 2s ease-in forwards ${duration- 2}s`,
     `kenburns-right ${duration}s linear both reverse 0s, fade-out 2s ease-in forwards ${duration - 2}s`,
     `kenburns-bottom ${duration}s linear both 0s, fade-out 2s ease-in forwards ${duration- 2}s`,
     `kenburns-left ${duration}s linear both 0s, fade-out 2s ease-in forwards ${duration- 2}s`,
 ]
 
 const textAnimation = `focus-in-contract 2s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards 0s, text-blur-out 2s ease-in forwards ${duration- 2}s`
+
+
 
 function getAll() {
     fetch("/mockData.json")
@@ -66,6 +68,8 @@ async function generateSlideshow(data) {
     for (let x = 0; x < data.length; x++) {
         let rest = document.querySelector(`.img${x}`)
         rest.style.opacity = 0;
+        rest.style.animation = ''
+        rest.style.zIndex = 10
         let r = document.querySelector(`.title${x}`)
         r.style.opacity = 0;
         console.log(r)
@@ -90,7 +94,7 @@ async function generateSlideshow(data) {
             playing.push(data[0])
             let activeImg = document.querySelector(`.img${i}`)
             activeImg.style.opacity = 100;
-            activeImg.style.zIndex = 15;
+            activeImg.style.zIndex = 20;
             let activeImg2 = document.querySelector(`.img${0}`)
             activeImg2.style.opacity = 100;
             let activeTitle = document.querySelector(`.title${i}`)
