@@ -97,6 +97,7 @@ async function generateSlideshow(data) {
             activeImg.style.zIndex = 20;
             let activeImg2 = document.querySelector(`.img${0}`)
             activeImg2.style.opacity = 100;
+            activeImg2.style.animation = '';
             let activeTitle = document.querySelector(`.title${i}`)
             activeTitle.style.opacity = 100;
             handleTemplate("last index", i, activeImg, activeTitle)
@@ -132,7 +133,6 @@ function handleTemplate(x, i, activeImg, activeTitle) {
         style = 0;
     }
     console.log(`handeling template${template}`)
-    console.log(style)
     if (template == 0) {
         if (x == "first index") {
             //let activeTitle = document.querySelector(`.title0`)
