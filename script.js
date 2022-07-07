@@ -1,23 +1,24 @@
 //http://127.0.0.1:5500/?duration=2&template=0
+//index.html?server=true&template=0&titlePrio=&positionPrio=&duration=5&img0_url=url&title0=aa&position0=8&img1_url=url&title1=bb&position1=0&img2_url=url&title2=cc&position2=4
+//index.html?server=true&template=0&titlePrio=&positionPrio=&duration=5&img0_url=http%3A%2F%2Flocalhost%3A8080%2Fecosystem_web%2Fiapi%2Fasset%2F%5Bobject%20Object%5D%2Fmedia%2F%5Bobject%20Object%5D%2Fstream&title0=ö&position0=8&img1_url=http%3A%2F%2Flocalhost%3A8080%2Fecosystem_web%2Fiapi%2Fasset%2F%5Bobject%20Object%5D%2Fmedia%2F%5Bobject%20Object%5D%2Fstream&title1=mkl&position1=0&img2_url=http%3A%2F%2Flocalhost%3A8080%2Fecosystem_web%2Fiapi%2Fasset%2F%5Bobject%20Object%5D%2Fmedia%2F%5Bobject%20Object%5D%2Fstream&title2=w&position2=4
 
-const gridSpots ={
-    '0': 'top-left',
-    '1': 'top-middle',
-    '2': 'top-right',
-    '3': 'middle-left',
-    '4': 'middle-middle',
-    '5': 'middle-right',
-    '6': 'bottom-left',
-    '7': 'bottom-middle',
-    '8': 'bottom-right',
-    '9': 'N/A'
-};
-
-
-    
+  
 const params = new URLSearchParams(window.location.search)
-const duration = params.get("duration")
-const template = params.get("template")
+let allParams = {}
+params.forEach(function(value, key) {
+    allParams[key] = value;
+})
+const duration = allParams.duration;
+const template = allParams.template;
+const titlePrio = allParams.titlePrio;
+const positionPrio = allParams.positionPrio;
+
+delete allParams.duration; delete allParams.template; delete allParams.titlePrio; delete allParams.positionPrio; delete allParams.server;
+console.log(Object.keys(allParams).length);
+console.log(Object.values(allParams)[0])
+console.log(allParams)
+
+
 
 const imageAnimation = [
     `kenburns-top ${duration}s linear both reverse 0s, fade-out 2s ease-in forwards ${duration- 2}s`,
@@ -28,8 +29,6 @@ const imageAnimation = [
 
 const textAnimation = `focus-in-contract 2s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards 0s, text-blur-out 2s ease-in forwards ${duration- 2}s`
 
-
-
 function getAll() {
     fetch("/mockData.json")
     .then(res => res.json())
@@ -38,6 +37,25 @@ function getAll() {
 }
 
 function generate(data) {
+/*  for (let i = 0; i < Object.keys(allParams).length / 3; i++) {
+      var img = document.createElement("img");
+      img.src = `images/${Object.values(allParams)[i]}`;
+      img.classList = `img${i} img`
+
+      var images = document.querySelector(".images");
+      images.appendChild(img)
+
+      var title = document.createElement("h1");
+      title.innerHTML = Object.values(allParams)[i + 6]
+      title.classList = `title${i} title slot${Object.values(allParams)[i + 3]}`
+
+      var titles = document.querySelector(".titles");
+      titles.appendChild(title)
+    }
+    Object.values(allParams)[i]       //image URL  
+    Object.values(allParams)[i + 3]   //title position
+    Object.values(allParams)[i + 6]   //title */
+
     for (let i = 0; i < data.length; i++) {
       var img = document.createElement("img");
       img.src = `images/${data[i].url}`;
@@ -72,12 +90,12 @@ async function generateSlideshow(data) {
         rest.style.zIndex = 10
         let r = document.querySelector(`.title${x}`)
         r.style.opacity = 0;
-        console.log(r)
+        //console.log(r)
     }
     let playing = [data[0]]
 
     for (let i = 0; i < data.length; i++) {
-        console.log(`${i} and ${i + 1}`)
+        //console.log(`${i} and ${i + 1}`)
         if (i == 0) {
             playing.push(data[i + 1])
             let activeImg = document.querySelector(`.img0`)
@@ -116,7 +134,7 @@ async function generateSlideshow(data) {
         }
        
         
-        console.log(playing)
+        //console.log(playing)
         await delay(duration)
         let r = document.querySelector(`.title${i}`)
         r.style.opacity = 0;
@@ -132,7 +150,7 @@ function handleTemplate(x, i, activeImg, activeTitle) {
     if (style == 4) {
         style = 0;
     }
-    console.log(`handeling template${template}`)
+    //console.log(`handeling template${template}`)
     if (template == 0) {
         if (x == "first index") {
             //let activeTitle = document.querySelector(`.title0`)
@@ -147,14 +165,15 @@ function handleTemplate(x, i, activeImg, activeTitle) {
             activeTitle.style.animation = textAnimation;
             activeImg.style.animation = imageAnimation[style]
         } else {
-            console.log("error")
+            //console.log("error")
         }
         style += 1
-        console.log(style)
+        //console.log(style)
     }
 
     
 }
 
 handleTemplate()
+//generate(params)
 getAll()
