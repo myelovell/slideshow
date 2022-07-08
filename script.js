@@ -17,9 +17,28 @@ delete allParams.duration; delete allParams.template; delete allParams.titlePrio
 let all = []
 let curr = {}
 let currIndex = 1
+console.log(titlePrio.length)
+console.log(positionPrio)
 for (let m = 0; m < Object.keys(allParams).length; m++) {
-    curr[Object.keys(allParams)[m].slice(2)] = Object.values(allParams)[m]
-    if (currIndex == 3) {
+    if (currIndex == 1) {
+        //url
+        curr[Object.keys(allParams)[m].slice(2)] = Object.values(allParams)[m]
+    } else if (currIndex == 2) {
+        //title
+        if (titlePrio.length > 0) {
+            console.log
+            curr[Object.keys(allParams)[m].slice(2)] = titlePrio
+        } else {
+            curr[Object.keys(allParams)[m].slice(2)] = Object.values(allParams)[m]
+        }        
+    }  else if (currIndex == 3) {
+        //position
+        if (positionPrio.length > 0) {
+            curr[Object.keys(allParams)[m].slice(2)] = positionPrio
+        } else {
+            curr[Object.keys(allParams)[m].slice(2)] = Object.values(allParams)[m]
+        } 
+        console.log(curr)
         currIndex = 0;
         all.push(curr)
         curr = {}
