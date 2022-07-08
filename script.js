@@ -2,7 +2,6 @@
 //http://127.0.0.1:5500/index.html?server=true&template=0&titlePrio=&positionPrio=&duration=5&0_url=images/test0.jpg&0_title=image0&0_position=8&1_url=images/test1.jpg&1_title=image1&1_position=4
 
 
-  
 const params = new URLSearchParams(window.location.search)
 let allParams = {}
 params.forEach(function(value, key) {
@@ -19,28 +18,23 @@ let all = []
 let curr = {}
 let currIndex = 1
 for (let m = 0; m < Object.keys(allParams).length; m++) {
-    console.log(m)
-    console.log(currIndex)
     curr[Object.keys(allParams)[m].slice(2)] = Object.values(allParams)[m]
     if (currIndex == 3) {
         currIndex = 0;
         all.push(curr)
         curr = {}
     }
-    console.log(curr)
     currIndex += 1
-
 }
 console.log(all)
 
+const textAnimation = `focus-in-contract 2s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards 0s, text-blur-out 2s ease-in forwards ${duration- 2}s`
 const imageAnimation = [
     `kenburns-top ${duration}s linear both reverse 0s, fade-out 2s ease-in forwards ${duration- 2}s`,
     `kenburns-right ${duration}s linear both reverse 0s, fade-out 2s ease-in forwards ${duration - 2}s`,
     `kenburns-bottom ${duration}s linear both 0s, fade-out 2s ease-in forwards ${duration- 2}s`,
     `kenburns-left ${duration}s linear both 0s, fade-out 2s ease-in forwards ${duration- 2}s`,
 ]
-
-const textAnimation = `focus-in-contract 2s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards 0s, text-blur-out 2s ease-in forwards ${duration- 2}s`
 
 function generate(data) {
     for (let i = 0; i < data.length; i++) {
@@ -50,9 +44,10 @@ function generate(data) {
 
       var images = document.querySelector(".images");
       images.appendChild(img)
+      
+        var title = document.createElement("h1");
+        title.innerHTML = data[i].title
 
-      var title = document.createElement("h1");
-      title.innerHTML = data[i].title
       title.classList = `title${i} title slot${data[i].position}`
 
       var titles = document.querySelector(".titles");
@@ -68,7 +63,6 @@ function delay(n){
 }
 
 
-
 async function generateSlideshow(data) {
     for (let x = 0; x < data.length; x++) {
         //resets all previously added styles
@@ -78,12 +72,10 @@ async function generateSlideshow(data) {
         rest.style.zIndex = 10
         let r = document.querySelector(`.title${x}`)
         r.style.opacity = 0;
-        //console.log(r)
     }
     let playing = [data[0]]
 
     for (let i = 0; i < data.length; i++) {
-        //console.log(`${i} and ${i + 1}`)
         if (i == 0) {
             playing.push(data[i + 1])
             let activeImg = document.querySelector(`.img0`)
@@ -121,8 +113,6 @@ async function generateSlideshow(data) {
             handleTemplate("index", i, activeImg, activeTitle)
         }
        
-        
-        //console.log(playing)
         await delay(duration)
         let r = document.querySelector(`.title${i}`)
         r.style.opacity = 0;
@@ -134,7 +124,6 @@ async function generateSlideshow(data) {
 
 let style = 0
 function handleTemplate(x, i, activeImg, activeTitle) {
-
     if (style == 4) {
         style = 0;
     }

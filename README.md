@@ -3,12 +3,12 @@ Work for NodearkAB. HTML package for slideshows
 
 # Roadmap frontend - My
 - [x] Project Setup/ Research 4h
-- [ ] Få ner 1-50 `imgID_url`, `imgID_title`, `imgID_grid`, `mall`, `duration` 3h
+- [x] Få ner 1-50 `imgID_url`, `imgID_title`, `imgID_position`, `template`, `duration` 3h
 - [ ] Integrera mallar från CodePen 6h
 - [x] Applicerar mall beroende på `mall` 2h
 - [x] Applicerar uppspelningstid av bild beroende på `duration` 20min
 - [x] Itterera genom bilder 1h
-- [x] Applicerar plats av `imgID_title` beroende oå `imgID_grid` 4h
+- [x] Applicerar plats av `imgID_title` beroende på `imgID_position` 4h
 - [x] Croppar bilderna till fullskärm 2h
 - [x] Responsivt ändrar bredd/höjd/proportion 5h
 
@@ -24,13 +24,15 @@ sla
 Estimerad tid: 16h
 
 ## URL Params
-| Parameter     | Description                               |
-| ------------- | ----------------------------------------- |
-| `imgID_url`   | `<img src="imgID_url" alt="imgID_title">` |
-| `imgID_title` | Displays during slideshow                 |
-| `imgID_grid`  | Between 0-8, determines placement of text |
-| `mall`        | Typ av mall vald                          |
-| `duration`    | Tid varje bild spelas                     |
+| Parameter         | Description                               |
+| ----------------- | ----------------------------------------- |
+| `imgID_url`       | `<img src="imgID_url" alt="imgID_title">` |
+| `imgID_title`     | Displays during slideshow                 |
+| `imgID_position`  | Between 0-8, determines placement of text |
+| `template`        | Typ av mall vald                          |
+| `duration`        | Tid varje bild spelas                     |
+| `positionPrio`    |                                           |
+| `titlePrio`       |                                           |
 
 
 
