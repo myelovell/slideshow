@@ -49,8 +49,8 @@ console.log(all)
 
 const textAnimation = `focus-in-contract 2s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards 0s, text-blur-out 2s ease-in forwards ${duration- 2}s`
 const imageAnimation = [
-    `kenburns-top ${duration}s linear both reverse 0s, fade-out 2s ease-in forwards ${duration- 2}s`,
-    `kenburns-right ${duration}s linear both reverse 0s, fade-out 2s ease-in forwards ${duration - 2}s`,
+    `kenburns-top ${duration}s linear both 0s, fade-out 2s ease-in forwards ${duration- 2}s`,
+    `kenburns-right ${duration}s linear both 0s, fade-out 2s ease-in forwards ${duration - 2}s`,
     `kenburns-bottom ${duration}s linear both 0s, fade-out 2s ease-in forwards ${duration- 2}s`,
     `kenburns-left ${duration}s linear both 0s, fade-out 2s ease-in forwards ${duration- 2}s`,
 ]
