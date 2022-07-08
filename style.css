@@ -4,23 +4,6 @@
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 }
 
-:root {
-  --duration: 5;
-}
-/* @media (orientation: landscape) {
-    .img {
-        width: 100vw;
-        height: auto;
-    }
-}
-
-@media (orientation: portrait) {
-    .img {
-        width: auto;
-        height: 100vh;
-    }
-} */
-
 body {
     height: 100vh;
     width: 100vw;
@@ -33,17 +16,9 @@ body {
    justify-content: center;
    align-items: center;
 }
-    /*
-    animation: name (duration)s linear both/reverse 0s, fade-out 2s ease-in forwards (duration - 2)s;
-    
-    animation: kenburns-top 8s linear both reverse 0s, fade-out 2s ease-in forwards 6s;  
-    animation: kenburns-right 8s linear both reverse 0s, fade-out 2s ease-in forwards 6s;
-    animation: kenburns-bottom 8s linear both 0s, fade-out 2s ease-in forwards 6s;  */
-
-
 
 .img {
-    /* animation: kenburns-top 6s linear both reverse 0.5s, fade-out 2s ease-in forwards 6s; */
+
     z-index: 10;
     position: absolute;
     overflow: hidden;
@@ -57,19 +32,13 @@ body {
     opacity: 0;
 }
 
-.textAnimation {
-  animation: focus-in-contract 2s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards 0s, text-blur-out 2s ease-in forwards 6s;
-
-}
-
 .titles {
     width: 100%;
     height: auto;
 }
 .title {
+    display: block;
     opacity: 0;
-    /*animation: focus-in-contract 3s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards 0s, text-blur-out 2s ease-in forwards (duration - 2)s; 
-    animation: focus-in-contract 3s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards 0s, text-blur-out 2s ease-in forwards 6s; */
     position: absolute;
     overflow: hidden;
     top: 50%;

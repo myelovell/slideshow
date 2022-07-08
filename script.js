@@ -47,6 +47,7 @@ for (let m = 0; m < Object.keys(allParams).length; m++) {
 }
 console.log(all)
 
+const textTransition = `transform 1s ease-in-out`
 const textAnimation = `focus-in-contract 2s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards 0s, text-blur-out 2s ease-in forwards ${duration- 2}s`
 const imageAnimation = [
     `kenburns-top ${duration}s linear both 0s, fade-out 2s ease-in forwards ${duration- 2}s`,
@@ -160,6 +161,20 @@ function handleTemplate(x, i, activeImg, activeTitle) {
             console.log("error")
         }
         style += 1
+    } else if (template == 1) {
+        if (x == "first index") {
+            //transition not working
+            activeTitle.style.transition = textTransition;
+            //activeImg.style.animation = imageAnimation[style]
+        } else if (x == "index") {
+            activeTitle.style.transition = textTransition;
+            //activeImg.style.animation = imageAnimation[style]
+        } else if(x == "last index") {
+            activeTitle.style.transition = textTransition;
+            //activeImg.style.animation = imageAnimation[style]
+        } else {
+            console.log("error")
+        }
     }
 
     
