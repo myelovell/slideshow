@@ -1,6 +1,6 @@
 //http://127.0.0.1:5500/?duration=2&template=0
-//index.html?server=true&template=0&titlePrio=&positionPrio=&duration=5&img0_url=url&title0=aa&position0=8&img1_url=url&title1=bb&position1=0&img2_url=url&title2=cc&position2=4
-//index.html?server=true&template=0&titlePrio=&positionPrio=&duration=5&img0_url=http%3A%2F%2Flocalhost%3A8080%2Fecosystem_web%2Fiapi%2Fasset%2F%5Bobject%20Object%5D%2Fmedia%2F%5Bobject%20Object%5D%2Fstream&title0=ö&position0=8&img1_url=http%3A%2F%2Flocalhost%3A8080%2Fecosystem_web%2Fiapi%2Fasset%2F%5Bobject%20Object%5D%2Fmedia%2F%5Bobject%20Object%5D%2Fstream&title1=mkl&position1=0&img2_url=http%3A%2F%2Flocalhost%3A8080%2Fecosystem_web%2Fiapi%2Fasset%2F%5Bobject%20Object%5D%2Fmedia%2F%5Bobject%20Object%5D%2Fstream&title2=w&position2=4
+//http://127.0.0.1:5500/index.html?server=true&template=0&titlePrio=&positionPrio=&duration=5&0_url=images/test0.jpg&0_title=image0&0_position=8&1_url=images/test1.jpg&1_title=image1&1_position=4
+
 
   
 const params = new URLSearchParams(window.location.search)
@@ -14,11 +14,24 @@ const titlePrio = allParams.titlePrio;
 const positionPrio = allParams.positionPrio;
 
 delete allParams.duration; delete allParams.template; delete allParams.titlePrio; delete allParams.positionPrio; delete allParams.server;
-console.log(Object.keys(allParams).length);
-console.log(Object.values(allParams)[0])
-console.log(allParams)
 
+let all = []
+let curr = {}
+let currIndex = 1
+for (let m = 0; m < Object.keys(allParams).length; m++) {
+    console.log(m)
+    console.log(currIndex)
+    curr[Object.keys(allParams)[m].slice(2)] = Object.values(allParams)[m]
+    if (currIndex == 3) {
+        currIndex = 0;
+        all.push(curr)
+        curr = {}
+    }
+    console.log(curr)
+    currIndex += 1
 
+}
+console.log(all)
 
 const imageAnimation = [
     `kenburns-top ${duration}s linear both reverse 0s, fade-out 2s ease-in forwards ${duration- 2}s`,
@@ -29,36 +42,10 @@ const imageAnimation = [
 
 const textAnimation = `focus-in-contract 2s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards 0s, text-blur-out 2s ease-in forwards ${duration- 2}s`
 
-function getAll() {
-    fetch("/mockData.json")
-    .then(res => res.json())
-    .then(mockData => generate(mockData))
-
-}
-
 function generate(data) {
-/*  for (let i = 0; i < Object.keys(allParams).length / 3; i++) {
-      var img = document.createElement("img");
-      img.src = `images/${Object.values(allParams)[i]}`;
-      img.classList = `img${i} img`
-
-      var images = document.querySelector(".images");
-      images.appendChild(img)
-
-      var title = document.createElement("h1");
-      title.innerHTML = Object.values(allParams)[i + 6]
-      title.classList = `title${i} title slot${Object.values(allParams)[i + 3]}`
-
-      var titles = document.querySelector(".titles");
-      titles.appendChild(title)
-    }
-    Object.values(allParams)[i]       //image URL  
-    Object.values(allParams)[i + 3]   //title position
-    Object.values(allParams)[i + 6]   //title */
-
     for (let i = 0; i < data.length; i++) {
       var img = document.createElement("img");
-      img.src = `images/${data[i].url}`;
+      img.src = data[i].url;
       img.classList = `img${i} img`
 
       var images = document.querySelector(".images");
@@ -66,7 +53,7 @@ function generate(data) {
 
       var title = document.createElement("h1");
       title.innerHTML = data[i].title
-      title.classList = `title${i} title slot${data[i].slot}`
+      title.classList = `title${i} title slot${data[i].position}`
 
       var titles = document.querySelector(".titles");
       titles.appendChild(title)
@@ -84,6 +71,7 @@ function delay(n){
 
 async function generateSlideshow(data) {
     for (let x = 0; x < data.length; x++) {
+        //resets all previously added styles
         let rest = document.querySelector(`.img${x}`)
         rest.style.opacity = 0;
         rest.style.animation = ''
@@ -150,30 +138,23 @@ function handleTemplate(x, i, activeImg, activeTitle) {
     if (style == 4) {
         style = 0;
     }
-    //console.log(`handeling template${template}`)
     if (template == 0) {
         if (x == "first index") {
-            //let activeTitle = document.querySelector(`.title0`)
             activeTitle.style.animation = textAnimation;
             activeImg.style.animation = imageAnimation[style]
         } else if (x == "index") {
-            //let activeTitle = document.querySelector(`.title${i}`)
             activeTitle.style.animation = textAnimation;
             activeImg.style.animation = imageAnimation[style]
         } else if(x == "last index") {
-            //let activeTitle = document.querySelector(`.title${i}`)
             activeTitle.style.animation = textAnimation;
             activeImg.style.animation = imageAnimation[style]
         } else {
-            //console.log("error")
+            console.log("error")
         }
         style += 1
-        //console.log(style)
     }
 
     
 }
 
-handleTemplate()
-//generate(params)
-getAll()
+generate(all)
