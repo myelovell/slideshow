@@ -74,25 +74,28 @@ function delay(n){
 function generate(data) {
     for (let i = 0; i < data.length; i++) {
         var imgContainer = document.createElement("div")
+        imgContainer.classList = `imgContainer imgContainer${i}`
         var images = document.querySelector(".images");
         var img = document.createElement("img");
-
 
         img.src = data[i].url;
         img.classList = `img${i} img`
 
+        imgContainer.appendChild(img)
+        images.appendChild(imgContainer)
         
-        images.appendChild(img)
         
-        
-        title.innerHTML = data[i].title
 
-        title.classList = `title${i} title slot${data[i].position}`
-        
+        var titleContainer = document.createElement("div")
+        titleContainer.classList = `titleContainer titleContainer${i}`
         var title = document.createElement("h1");
         var titles = document.querySelector(".titles");
-        var titleContainer = document.createElement("div")
-        titles.appendChild(title)
+
+        title.innerHTML = data[i].title
+        title.classList = `title${i} title slot${data[i].position}`
+
+        titleContainer.appendChild(title)
+        titles.appendChild(titleContainer)
     }
    
 }
