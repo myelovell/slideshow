@@ -36,14 +36,25 @@ body {
     width: 100%;
     height: auto;
 }
-.title {
+
+/* Template 1
+  when not showing:
+    transform: translateY(1.2em);
+    transition: transform 1s ease-in-out;
+
+  when showing: 
+    transform: translate(0);
+    transition-delay: 0.3s;
+
+*/
+
+
+.title { 
     display: block;
     opacity: 0;
     position: absolute;
     overflow: hidden;
-    top: 50%;
-    transform: translateY(-50%);
-    
+
     color: black;
     font-size: 2em;
     text-transform: uppercase;
@@ -219,23 +230,93 @@ animation: kenburns-top 6s linear both reverse 0.5s, fade-out 2s ease-in forward
   /*animation slide-in-bottom*/
   @keyframes slide-in-bottom {
     0% {
-      transform: translateY(100%);
+      
+      transform: translateY(0);
       opacity: 0;
+    }
+    25% {
+      transform: translateY(-30px);
+      opacity: 1;
+    }
+    75% {
+      transform: translateY(-30px);
+      opacity: 1;
     }
     100% {
       transform: translateY(0);
-      opacity: 1;
+      opacity: 0;
     }
   }
-  /*animation rotate-center*/
-  @keyframes rotate-center {
+
+/*right to middle v1*/
+  @keyframes rightToMiddle {
     0% {
-      transform: rotate(0);
+      transform: translateX(100vw);
     }
     100% {
-      transform: rotate(360deg);
+      transform: translateX(50vw);
     }
   }
 
+/*middle to right v1*/
+  @keyframes middleToRight {
+    0% {
+      transform: translateX(50vw);
+    }
+    100% {
+      transform: translateX(100vw);
+    }
+  }
+
+/*Left to middle v1*/
+  @keyframes leftToMiddle {
+    0% {
+      transform: translateX(-100vw);
+    }
+    100% {
+      transform: translateX(-50vw);
+    }
+  }
+
+/*middle to left v1*/
+@keyframes middleToLeft {
+  0% {
+    transform: translateX(-50vw);
+  }
+  100% {
+    transform: translateX(-100vw);
+  }
+}
 
 
+/*Left to middle v2*/
+@keyframes leftToMiddle {
+  0% {
+    transform: translateX(-100vw);
+  }
+  40% {
+    transform: translateX(-50vw);
+  }
+  60% {
+    transform: translateX(-50vw);
+  }
+  100% {
+    transform: translateX(-100vw);
+  }
+}
+
+/*right to middle v2*/
+@keyframes rightToMiddle {
+  0% {
+    transform: translateX(100vw);
+  }
+  40% {
+    transform: translateX(50vw);
+  }
+  60% {
+    transform: translateX(50vw);
+  }
+  100% {
+    transform: translateX(100vw);
+  }
+}
