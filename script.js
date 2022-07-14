@@ -52,8 +52,8 @@ for (let m = 0; m < Object.keys(allParams).length; m++) {
 console.log(all)
 
 //image animation types
-const rightToMiddle = `rightToMiddle ${duration+ 2}s, ease-in ${duration- 3}s`
-const leftToMiddle = `leftToMiddle ${duration+ 2}s, ease-in ${duration- 3}s`
+const rightToMiddle = `rightToMiddle ${duration}s, ease-in ${duration- 2}s`
+const leftToMiddle = `leftToMiddle ${duration}s, ease-in ${duration- 2}s`
 const imageAnimation = [
     `kenburns-top ${duration + 2}s linear both 0s, fade-out 2s ease-in forwards ${duration- 2}s`,
     `kenburns-right ${duration + 2}s linear both 0s, fade-out 2s ease-in forwards ${duration - 2}s`,
@@ -71,10 +71,13 @@ const middleToLeft = `middleToLeft ${duration}s, ease-in ${duration- 2}s`
 
 //n == duration
 function delay(n){
+    console.log("delay is active")
     return new Promise(function(resolve){
         setTimeout(resolve,n*1000);
     });
 }
+
+
 
 //generates images
 function generate(data) {
@@ -112,89 +115,75 @@ function generate(data) {
    
 }
 
+function nextSlide(i, previousImg, previousTitle){
+    previousImg.forEach(element => { element.classList.remove("current")});
+    previousImg.forEach(element => { element.style.animation = ''});             
+    previousTitle.classList.remove("current")
+    previousTitle.style.animation = ''
+    let currentImg = document.querySelectorAll(`.img${i}`)
+    let currentTitle = document.querySelector(`.title${i}`)
+    handleTemplate(i, currentImg, currentTitle)
+    currentImg.forEach(element => { element.classList.remove("next")});
+    currentTitle.classList.remove("next")
+    currentImg.forEach(element => {element.classList.add("current")});
+    currentTitle.classList.add("current")
+}
+
 
 async function generateSlideshow(data) {
-/*     for (let x = 1; x < data.length; x++) {
-        //resets all previously added styles
-        //console.log("resetting all previously added styles")
-        let restImg = document.querySelector(`.img${x}`)
-        restImg.style.animation = ''
-        let restTitle = document.querySelector(`.title${x}`)
-        restTitle.style.animation = ''
-        restImg.classList.remove("current")
-        restTitle.classList.remove("current")
-        if (template == 1) {
-            let dupe = document.querySelector(`.imgDup${x}`)
-            dupe.style.animation = ''
-        }
-    } */
     for (let i = 0; i < data.length; i++) {
+        console.log(i)
         if (i == 0) {
-            let currentImg = document.querySelector(`.img0`)
-            let currentTitle = document.querySelector(`.title0`)
-            currentImg.classList.add("current")
-            currentTitle.classList.add("current")
-            handleTemplate("first index", i, currentImg, currentTitle)
+            let previousImg = document.querySelectorAll(`.img${data.length - 1}`)
+            let previousTitle = document.querySelector(`.title${data.length - 1}`)
+            nextSlide(i, previousImg, previousTitle)       
+            let activeImg = document.querySelectorAll(`.img${i + 1}`)
+            activeImg.forEach(element => { element.classList.add("next")});
             await delay(duration)
-            let activeImg = document.querySelector(`.img${data.length - 1}`)
-            activeImg.classList.remove("current")
-            activeImg.style.animation = ''
-            currentImg.classList.remove("current")
-            currentTitle.classList.remove("current")
-            console.log(activeImg)
+
+
+        } else if (i == data.length - 1)  {
+            let previousImg = document.querySelectorAll(`.img${i - 1}`)
+            let previousTitle = document.querySelector(`.title${i - 1}`)
+
+            nextSlide(i, previousImg, previousTitle) 
+            let activeImg = document.querySelectorAll(`.img${0}`)
+            activeImg.forEach(element => { element.classList.add("next")});
+            await delay(duration)
 
         } else {
-            let currentImg = document.querySelector(`.img${i}`)
-            let currentTitle = document.querySelector(`.title${i}`)
-            currentImg.classList.add("current")
-            currentTitle.classList.add("current")
-            handleTemplate("index", i, currentImg, currentTitle)
+            let previousImg = document.querySelectorAll(`.img${i - 1}`)
+            let previousTitle = document.querySelector(`.title${i - 1}`)
+
+            nextSlide(i, previousImg, previousTitle) 
+            let activeImg = document.querySelectorAll(`.img${i + 1}`)
+            activeImg.forEach(element => { element.classList.add("next")});
             await delay(duration)
-            let activeImg = document.querySelector(`.img${i - 1}`)
-            activeImg.classList.remove("current")
-            activeImg.style.animation = ''
-            currentImg.classList.remove("current")
-            currentTitle.classList.remove("current")
+            
         }
 
     }
     generateSlideshow(data)
+    
 }
 
 let style = 0
-function handleTemplate(x, i, currentImg, currentTitle) {
+function handleTemplate(i, currentImg, currentTitle) {
     if (style == 4) {
         style = 0;
     }
-    if (template == 0) {
-        if (x == "first index") {
-            currentTitle.style.animation = textAnimation;
-            currentImg.style.animation = imageAnimation[style]
-        } else if (x == "index") {
-            currentTitle.style.animation = textAnimation;
-            currentImg.style.animation = imageAnimation[style]
-        } else {
-            console.log("error")
-        }
+    if (template == 0) {    
+        currentTitle.style.animation = textAnimation;
+        currentImg.forEach(element => { element.style.animation = imageAnimation[style]});
         style += 1
     } else if (template == 1) {
-        if (x == "first index") {
-            let currentImgDup = document.querySelector(`.imgDup${i}`)
-
             currentTitle.style.animation = textTransition;
-            currentImgDup.style.animation = rightToMiddle;
-            currentImg.style.animation = leftToMiddle;
-        } else if (x == "index") {
-            let currentImgDup = document.querySelector(`.imgDup${i}`)
-
-            currentTitle.style.animation = textTransition;
-            currentImgDup.style.animation = rightToMiddle;
-            currentImg.style.animation = leftToMiddle;
-        } else {
-            console.log("error")
-        }    
+            currentImg[1].style.animation = rightToMiddle;
+            currentImg[0].style.animation = leftToMiddle;
+ 
     }
 }
 
-
 generate(all)
+
+

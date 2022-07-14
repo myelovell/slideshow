@@ -5,8 +5,13 @@
 }
 
 .current {
-  opacity: 0.5 !important;
-  z-index: 1 !important;
+  opacity: 1 !important;
+  z-index: 2 !important;
+}
+
+.next {
+    opacity: 1 !important;
+    z-index: 1 !important; 
 }
 
 
