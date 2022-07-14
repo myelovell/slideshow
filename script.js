@@ -1,5 +1,12 @@
-//http://127.0.0.1:5500/index.html?server=true&template=0&titlePrio=&positionPrio=&duration=5&0_url=images/test0.jpg&0_title=image0&0_position=8&1_url=images/test1.jpg&1_title=image1&1_position=4&2_url=images/test2.jpg&2_title=image2&2_position=3&3_url=images/test3.jpg&3_title=image3&3_position=2
+/* Current test URL
 
+http://127.0.0.1:5500
+/index.html?server=true&template=1&titlePrio=&positionPrio=&duration=5&
+0_url=images/test1.jpg&0_title=image0&0_position=8&
+1_url=images/test2.jpg&1_title=image1&1_position=4&
+2_url=images/test4.jpg&2_title=image2&2_position=3
+
+*/
 
 const params = new URLSearchParams(window.location.search)
 let allParams = {}
@@ -48,17 +55,15 @@ console.log(all)
 const rightToMiddle = `rightToMiddle ${duration+ 2}s, ease-in ${duration- 3}s`
 const leftToMiddle = `leftToMiddle ${duration+ 2}s, ease-in ${duration- 3}s`
 const imageAnimation = [
-    `kenburns-top ${duration}s linear both 0s, fade-out 2s ease-in forwards ${duration- 2}s`,
-    `kenburns-right ${duration}s linear both 0s, fade-out 2s ease-in forwards ${duration - 2}s`,
-    `kenburns-bottom ${duration}s linear both 0s, fade-out 2s ease-in forwards ${duration- 2}s`,
-    `kenburns-left ${duration}s linear both 0s, fade-out 2s ease-in forwards ${duration- 2}s`,
+    `kenburns-top ${duration + 2}s linear both 0s, fade-out 2s ease-in forwards ${duration- 2}s`,
+    `kenburns-right ${duration + 2}s linear both 0s, fade-out 2s ease-in forwards ${duration - 2}s`,
+    `kenburns-bottom ${duration + 2}s linear both 0s, fade-out 2s ease-in forwards ${duration- 2}s`,
+    `kenburns-left ${duration + 2}s linear both 0s, fade-out 2s ease-in forwards ${duration- 2}s`,
 ]
 
 //text animation types 
 const textTransition = `slide-in-bottom ${duration}s linear both 0s, ease-in forwards ${duration- 2}s`
 const textAnimation = `focus-in-contract 2s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards 0s, text-blur-out 2s ease-in forwards ${duration- 2}s`
-
-
 
 //depricated ATM
 const middleToRight = `middleToRight ${duration}s, ease-in ${duration- 2}s`
@@ -71,6 +76,7 @@ function delay(n){
     });
 }
 
+//generates images
 function generate(data) {
     for (let i = 0; i < data.length; i++) {
         var imgContainer = document.createElement("div")
@@ -80,10 +86,15 @@ function generate(data) {
 
         img.src = data[i].url;
         img.classList = `img${i} img`
-
         imgContainer.appendChild(img)
+
+        if (template == 1) {
+            var imgDup = document.createElement("img");
+            imgDup.src = data[i].url;
+            imgDup.classList = `img${i} img imgDup${i}`
+            imgContainer.appendChild(imgDup)
+        } 
         images.appendChild(imgContainer)
-        
         
 
         var titleContainer = document.createElement("div")
@@ -97,7 +108,93 @@ function generate(data) {
         titleContainer.appendChild(title)
         titles.appendChild(titleContainer)
     }
+    generateSlideshow(data)
    
 }
+
+
+async function generateSlideshow(data) {
+/*     for (let x = 1; x < data.length; x++) {
+        //resets all previously added styles
+        //console.log("resetting all previously added styles")
+        let restImg = document.querySelector(`.img${x}`)
+        restImg.style.animation = ''
+        let restTitle = document.querySelector(`.title${x}`)
+        restTitle.style.animation = ''
+        restImg.classList.remove("current")
+        restTitle.classList.remove("current")
+        if (template == 1) {
+            let dupe = document.querySelector(`.imgDup${x}`)
+            dupe.style.animation = ''
+        }
+    } */
+    for (let i = 0; i < data.length; i++) {
+        if (i == 0) {
+            let currentImg = document.querySelector(`.img0`)
+            let currentTitle = document.querySelector(`.title0`)
+            currentImg.classList.add("current")
+            currentTitle.classList.add("current")
+            handleTemplate("first index", i, currentImg, currentTitle)
+            await delay(duration)
+            let activeImg = document.querySelector(`.img${data.length - 1}`)
+            activeImg.classList.remove("current")
+            activeImg.style.animation = ''
+            currentImg.classList.remove("current")
+            currentTitle.classList.remove("current")
+            console.log(activeImg)
+
+        } else {
+            let currentImg = document.querySelector(`.img${i}`)
+            let currentTitle = document.querySelector(`.title${i}`)
+            currentImg.classList.add("current")
+            currentTitle.classList.add("current")
+            handleTemplate("index", i, currentImg, currentTitle)
+            await delay(duration)
+            let activeImg = document.querySelector(`.img${i - 1}`)
+            activeImg.classList.remove("current")
+            activeImg.style.animation = ''
+            currentImg.classList.remove("current")
+            currentTitle.classList.remove("current")
+        }
+
+    }
+    generateSlideshow(data)
+}
+
+let style = 0
+function handleTemplate(x, i, currentImg, currentTitle) {
+    if (style == 4) {
+        style = 0;
+    }
+    if (template == 0) {
+        if (x == "first index") {
+            currentTitle.style.animation = textAnimation;
+            currentImg.style.animation = imageAnimation[style]
+        } else if (x == "index") {
+            currentTitle.style.animation = textAnimation;
+            currentImg.style.animation = imageAnimation[style]
+        } else {
+            console.log("error")
+        }
+        style += 1
+    } else if (template == 1) {
+        if (x == "first index") {
+            let currentImgDup = document.querySelector(`.imgDup${i}`)
+
+            currentTitle.style.animation = textTransition;
+            currentImgDup.style.animation = rightToMiddle;
+            currentImg.style.animation = leftToMiddle;
+        } else if (x == "index") {
+            let currentImgDup = document.querySelector(`.imgDup${i}`)
+
+            currentTitle.style.animation = textTransition;
+            currentImgDup.style.animation = rightToMiddle;
+            currentImg.style.animation = leftToMiddle;
+        } else {
+            console.log("error")
+        }    
+    }
+}
+
 
 generate(all)

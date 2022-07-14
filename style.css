@@ -4,6 +4,12 @@
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 }
 
+.current {
+  opacity: 0.5 !important;
+  z-index: 1 !important;
+}
+
+
 body {
     height: 100vh;
     width: 100vw;
@@ -17,9 +23,17 @@ body {
    align-items: center;
 }
 
-.img {
+.imgContainer {
+  overflow: hidden;
+  object-fit: cover;
+  height: 100vh;
+  width: 100vw;
+  position: absolute;
+}
 
-    z-index: 10;
+.img {
+    z-index: 0;
+    opacity: 0;
     position: absolute;
     overflow: hidden;
     object-fit: cover;
@@ -29,7 +43,7 @@ body {
     background-position: center center;
     background-repeat: no-repeat;
     background-size: cover;
-    opacity: 0;
+    
 }
 
 .titles {
@@ -37,19 +51,9 @@ body {
     height: auto;
 }
 
-/* Template 1
-  when not showing:
-    transform: translateY(1.2em);
-    transition: transform 1s ease-in-out;
 
-  when showing: 
-    transform: translate(0);
-    transition-delay: 0.3s;
-
-*/
-
-
-.title { 
+.title {
+    z-index: 0; 
     display: block;
     opacity: 0;
     position: absolute;
@@ -62,7 +66,6 @@ body {
     text-shadow: #FFF 1px 0 10px;
     box-shadow: black;
     
-    z-index: 20;
 }
 
 
@@ -186,20 +189,7 @@ animation: kenburns-top 6s linear both reverse 0.5s, fade-out 2s ease-in forward
       opacity: 1;
     }
   }
-  /*animation tracking-in-contract*/
-  @keyframes tracking-in-contract {
-    0% {
-      letter-spacing: 1em;
-      opacity: 0;
-    }
-    40% {
-      opacity: 0.6;
-    }
-    100% {
-      letter-spacing: normal;
-      opacity: 1;
-    }
-  }
+  
   /*animation fade-out*/
   @keyframes fade-out {
     0% {
