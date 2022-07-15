@@ -66,8 +66,8 @@ const textTransition = `slide-in-bottom ${duration}s linear both 0s, ease-in for
 const textAnimation = `focus-in-contract 2s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards 0s, text-blur-out 2s ease-in forwards ${duration- 2}s`
 
 //depricated ATM
-const middleToRight = `middleToRight ${duration}s, ease-in ${duration- 2}s`
-const middleToLeft = `middleToLeft ${duration}s, ease-in ${duration- 2}s`
+const middleToRight = `middleToRight ${duration * 0.5}s, ease-in ${duration * 0.5}s`
+const middleToLeft = `middleToLeft ${duration * 0.5}s, ease-in ${duration * 0.5}s`
 
 //n == duration
 function delay(n){
@@ -92,10 +92,14 @@ function generate(data) {
         imgContainer.appendChild(img)
 
         if (template == 1) {
+            img.style.objectPosition = "50vw 0";
             var imgDup = document.createElement("img");
             imgDup.src = data[i].url;
+            imgDup.style.objectPosition = "-50vw 0";
             imgDup.classList = `img${i} img imgDup${i}`
             imgContainer.appendChild(imgDup)
+
+
         } 
         images.appendChild(imgContainer)
         
@@ -115,18 +119,23 @@ function generate(data) {
    
 }
 
-function nextSlide(i, previousImg, previousTitle){
+async function nextSlide(i, previousImg, previousTitle){
+    let currentImg = document.querySelectorAll(`.img${i}`)
+    let currentTitle = document.querySelector(`.title${i}`)
+    handleTemplate(i, currentImg, currentTitle)
+    console.log(currentImg[0])
+    console.log(previousImg[0])
+    currentTitle.classList.add("current")
+    await delay(2)
+    currentImg.forEach(element => {element.classList.add("current")});
+    
+    currentImg.forEach(element => { element.classList.remove("next")});
+    currentTitle.classList.remove("next")
+    //after animation has started
     previousImg.forEach(element => { element.classList.remove("current")});
     previousImg.forEach(element => { element.style.animation = ''});             
     previousTitle.classList.remove("current")
     previousTitle.style.animation = ''
-    let currentImg = document.querySelectorAll(`.img${i}`)
-    let currentTitle = document.querySelector(`.title${i}`)
-    handleTemplate(i, currentImg, currentTitle)
-    currentImg.forEach(element => { element.classList.remove("next")});
-    currentTitle.classList.remove("next")
-    currentImg.forEach(element => {element.classList.add("current")});
-    currentTitle.classList.add("current")
 }
 
 
@@ -136,10 +145,10 @@ async function generateSlideshow(data) {
         if (i == 0) {
             let previousImg = document.querySelectorAll(`.img${data.length - 1}`)
             let previousTitle = document.querySelector(`.title${data.length - 1}`)
-            nextSlide(i, previousImg, previousTitle)       
+            nextSlide(i, previousImg, previousTitle)
+            await delay(duration - 2)       
             let activeImg = document.querySelectorAll(`.img${i + 1}`)
             activeImg.forEach(element => { element.classList.add("next")});
-            await delay(duration)
 
 
         } else if (i == data.length - 1)  {
@@ -147,18 +156,20 @@ async function generateSlideshow(data) {
             let previousTitle = document.querySelector(`.title${i - 1}`)
 
             nextSlide(i, previousImg, previousTitle) 
+            await delay(duration - 2)
             let activeImg = document.querySelectorAll(`.img${0}`)
             activeImg.forEach(element => { element.classList.add("next")});
-            await delay(duration)
+            
 
         } else {
             let previousImg = document.querySelectorAll(`.img${i - 1}`)
             let previousTitle = document.querySelector(`.title${i - 1}`)
 
-            nextSlide(i, previousImg, previousTitle) 
+            nextSlide(i, previousImg, previousTitle)
+            await delay(duration - 2) 
             let activeImg = document.querySelectorAll(`.img${i + 1}`)
             activeImg.forEach(element => { element.classList.add("next")});
-            await delay(duration)
+            
             
         }
 
