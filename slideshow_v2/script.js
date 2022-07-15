@@ -1,18 +1,13 @@
-/* Current test URL
-
-http://127.0.0.1:5500
-/index.html?server=true&template=1&titlePrio=&positionPrio=&duration=5&
-0_url=images/test1.jpg&0_title=image0&0_position=8&
-1_url=images/test2.jpg&1_title=image1&1_position=4&
-2_url=images/test4.jpg&2_title=image2&2_position=3
-
-*/
+//////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////# PARAMETERS #////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////
 
 const params = new URLSearchParams(window.location.search)
 let allParams = {}
 params.forEach(function(value, key) {
     allParams[key] = value;
 })
+
 //static URL parameters
 const duration = Number(allParams.duration);
 const template = allParams.template;
@@ -24,7 +19,8 @@ delete allParams.duration; delete allParams.template; delete allParams.titlePrio
 let all = []
 let curr = {}
 let currIndex = 1
-//parses URL to JSON
+
+//Parse dynamic URL parameters to JSON
 for (let m = 0; m < Object.keys(allParams).length; m++) {
     //handles url
     if (currIndex == 1) {
@@ -51,9 +47,11 @@ for (let m = 0; m < Object.keys(allParams).length; m++) {
 }
 console.log(all)
 
-//image animation types
-const rightToMiddle = `rightToMiddle ${duration}s, ease-in ${duration- 2}s`
-const leftToMiddle = `leftToMiddle ${duration}s, ease-in ${duration- 2}s`
+//////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////# ANIMATIONS #////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////
+
+//image animation types. template 0
 const imageAnimation = [
     `kenburns-top ${duration + 2}s linear both 0s, fade-out 2s ease-in forwards ${duration- 2}s`,
     `kenburns-right ${duration + 2}s linear both 0s, fade-out 2s ease-in forwards ${duration - 2}s`,
@@ -61,14 +59,21 @@ const imageAnimation = [
     `kenburns-left ${duration + 2}s linear both 0s, fade-out 2s ease-in forwards ${duration- 2}s`,
 ]
 
-//text animation types 
-const textTransition = `slide-in-bottom ${duration}s linear both 0s, ease-in forwards ${duration- 2}s`
+//image animation types. template 1
+const rightToMiddle = `rightToMiddle ${duration}s, ease-in ${duration- 2}s`
+const leftToMiddle = `leftToMiddle ${duration}s, ease-in ${duration- 2}s`
+
+//text animation type, template 0
 const textAnimation = `focus-in-contract 2s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards 0s, text-blur-out 2s ease-in forwards ${duration- 2}s`
 
-//depricated ATM
-const middleToRight = `middleToRight ${duration * 0.5}s, ease-in ${duration * 0.5}s`
-const middleToLeft = `middleToLeft ${duration * 0.5}s, ease-in ${duration * 0.5}s`
+//text animation type, template 1
+const textTransition = `slide-in-bottom ${duration}s linear both 0s, ease-in forwards ${duration- 2}s`
 
+///////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////#  FUNCTIONS  #////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////
+
+//Sets timeout 
 //n == duration
 function delay(n){
     console.log("delay is active")
@@ -76,8 +81,6 @@ function delay(n){
         setTimeout(resolve,n*1000);
     });
 }
-
-
 
 //generates images
 function generate(data) {
@@ -98,12 +101,9 @@ function generate(data) {
             imgDup.style.objectPosition = "-50vw 0";
             imgDup.classList = `img${i} img imgDup${i}`
             imgContainer.appendChild(imgDup)
-
-
         } 
         images.appendChild(imgContainer)
         
-
         var titleContainer = document.createElement("div")
         titleContainer.classList = `titleContainer titleContainer${i}`
         var title = document.createElement("h1");
@@ -116,9 +116,9 @@ function generate(data) {
         titles.appendChild(titleContainer)
     }
     generateSlideshow(data)
-   
 }
 
+//Handles current slide, and displays next slide
 async function nextSlide(i, previousImg, previousTitle){
     let currentImg = document.querySelectorAll(`.img${i}`)
     let currentTitle = document.querySelector(`.title${i}`)
@@ -128,17 +128,16 @@ async function nextSlide(i, previousImg, previousTitle){
     currentTitle.classList.add("current")
     await delay(2)
     currentImg.forEach(element => {element.classList.add("current")});
-    
     currentImg.forEach(element => { element.classList.remove("next")});
     currentTitle.classList.remove("next")
-    //after animation has started
     previousImg.forEach(element => { element.classList.remove("current")});
     previousImg.forEach(element => { element.style.animation = ''});             
     previousTitle.classList.remove("current")
     previousTitle.style.animation = ''
 }
 
-
+//Loop through all images in slide
+//Should be noted that this is an infinite loop
 async function generateSlideshow(data) {
     for (let i = 0; i < data.length; i++) {
         console.log(i)
@@ -149,8 +148,6 @@ async function generateSlideshow(data) {
             await delay(duration - 2)       
             let activeImg = document.querySelectorAll(`.img${i + 1}`)
             activeImg.forEach(element => { element.classList.add("next")});
-
-
         } else if (i == data.length - 1)  {
             let previousImg = document.querySelectorAll(`.img${i - 1}`)
             let previousTitle = document.querySelector(`.title${i - 1}`)
@@ -159,8 +156,6 @@ async function generateSlideshow(data) {
             await delay(duration - 2)
             let activeImg = document.querySelectorAll(`.img${0}`)
             activeImg.forEach(element => { element.classList.add("next")});
-            
-
         } else {
             let previousImg = document.querySelectorAll(`.img${i - 1}`)
             let previousTitle = document.querySelector(`.title${i - 1}`)
@@ -169,15 +164,12 @@ async function generateSlideshow(data) {
             await delay(duration - 2) 
             let activeImg = document.querySelectorAll(`.img${i + 1}`)
             activeImg.forEach(element => { element.classList.add("next")});
-            
-            
         }
-
     }
-    generateSlideshow(data)
-    
+    generateSlideshow(data)    
 }
 
+//Applies anmimations depending on template
 let style = 0
 function handleTemplate(i, currentImg, currentTitle) {
     if (style == 4) {
@@ -188,10 +180,9 @@ function handleTemplate(i, currentImg, currentTitle) {
         currentImg.forEach(element => { element.style.animation = imageAnimation[style]});
         style += 1
     } else if (template == 1) {
-            currentTitle.style.animation = textTransition;
-            currentImg[1].style.animation = rightToMiddle;
-            currentImg[0].style.animation = leftToMiddle;
- 
+        currentTitle.style.animation = textTransition;
+        currentImg[1].style.animation = rightToMiddle;
+        currentImg[0].style.animation = leftToMiddle;
     }
 }
 
